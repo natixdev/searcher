@@ -1,0 +1,7 @@
+fastapi
+pydantic
+SQLAlchemy
+uvicorn
+elasticsearch
+python-dotenv
+alembic
