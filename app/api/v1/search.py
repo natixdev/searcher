@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db import get_db_session
-from schemas import DocumentResponse, SearchRequest, SearchResponse
-from services import search_documents
+from app.db import get_db_session
+from app.schemas import DocumentResponse, SearchRequest, SearchResponse
+from app.services import search_documents
 
 
 router = APIRouter(prefix='/search', tags=['Search'])

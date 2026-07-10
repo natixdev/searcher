@@ -4,9 +4,9 @@ from elasticsearch import NotFoundError
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from elastic import elasticsearch_client
-from models import Document
-from settings import settings
+from app.elastic import elasticsearch_client
+from app.models import Document
+from app.settings import settings
 
 
 logger = logging.getLogger(__name__)

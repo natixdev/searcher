@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db import get_db_session
-from services import DocumentNotFoundError, delete_document
+from app.db import get_db_session
+from app.services import DocumentNotFoundError, delete_document
 
 
 router = APIRouter(prefix='/documents', tags=['Documents'])

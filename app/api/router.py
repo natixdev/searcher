@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from .v1 import documents_router, search_router
+from app.api.v1 import documents_router, search_router
 
 
 router = APIRouter(prefix='/api/v1')

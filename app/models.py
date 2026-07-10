@@ -4,7 +4,7 @@ from sqlalchemy import DateTime, String, Text, func
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import Mapped, mapped_column
 
-from .db import Base
+from app.db import Base
 
 
 class Document(Base):
