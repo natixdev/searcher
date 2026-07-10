@@ -16,24 +16,6 @@ class DocumentNotFoundError(Exception):
     """Документ не найден."""
 
 
-async def index_document(document: Document) -> None:
-    """Индексирует документ в Elasticsearch."""
-    try:
-        await elasticsearch_client.index(
-            index=settings.elasticsearch_index,
-            id=document.id,
-            document={
-                'id': document.id,
-                'text': document.text,
-            },
-        )
-    except Exception:
-        logger.exception(
-            'Ошибка при индексировании документа с id = %s.', document.id
-        )
-        raise
-
-
 async def search_documents(
     session: AsyncSession,
     text: str,
