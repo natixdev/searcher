@@ -4,7 +4,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db import get_db_session
 from app.services import DocumentNotFoundError, delete_document
 
-
 router = APIRouter(prefix='/documents', tags=['Documents'])
 
 

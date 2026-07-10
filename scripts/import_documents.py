@@ -9,17 +9,17 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from app.db import async_session, engine
+from app.db import Base, async_session, engine
 from app.elastic import elasticsearch_client
 from app.models import Document
 from app.settings import settings
-from app.db import Base
 
 
 async def init_db():
     """Создаёт таблицы, если их нет."""
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+
 
 async def import_documents(csv_file: Path) -> None:
     """Импортирует документы из CSV."""
@@ -59,19 +59,21 @@ async def import_documents(csv_file: Path) -> None:
 
     print(f'Imported {len(documents)} documents.')
 
+
 async def main() -> None:
     """Точка входа."""
     args = parse_arguments()
-    
+
     # Создаём таблицы
     await init_db()
-    
+
     try:
         await import_documents(args.csv_file)
     finally:
         # Закрываем клиент Elasticsearch
         await elasticsearch_client.close()
-        print("Elasticsearch client closed.")
+        print('Elasticsearch client closed.')
+
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -83,6 +85,7 @@ def parse_arguments() -> argparse.Namespace:
         help='Путь к CSV-файлу с документами.',
     )
     return parser.parse_args()
+
 
 if __name__ == '__main__':
     asyncio.run(main())

@@ -2,7 +2,6 @@ from elasticsearch import AsyncElasticsearch
 
 from app.settings import settings
 
-
 elasticsearch_client = AsyncElasticsearch(
     hosts=[
         {

@@ -8,7 +8,6 @@ from app.elastic import elasticsearch_client
 from app.models import Document
 from app.settings import settings
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -21,15 +20,22 @@ async def search_documents(
     text: str,
 ) -> list[Document]:
     """Выполняет поиск документов."""
-    response = await elasticsearch_client.search(
-        index=settings.elasticsearch_index,
-        size=20,
-        query={
-            'match': {
-                'text': text,
+    try:
+        response = await elasticsearch_client.search(
+            index=settings.elasticsearch_index,
+            size=20,
+            query={
+                'match': {
+                    'text': text,
+                },
             },
-        },
-    )
+        )
+    except Exception:
+        logger.exception(
+            'Ошибка Elasticsearch при поиске индекса %s',
+            settings.elasticsearch_index,
+        )
+        raise
 
     document_ids = [
         int(hit['_source']['id']) for hit in response['hits']['hits']
@@ -40,7 +46,7 @@ async def search_documents(
     result = await session.execute(
         select(Document)
         .where(Document.id.in_(document_ids))
-        .order_by(Document.created_date.desc())
+        .order_by(Document.created_date.desc()),
     )
     return result.scalars().all()
 

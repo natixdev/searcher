@@ -7,9 +7,10 @@ Create Date: 2026-07-10 17:32:40.196904
 """
 from typing import Sequence, Union
 
-from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
+
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = 'b611e8e8806d'
@@ -26,7 +27,7 @@ def upgrade() -> None:
     sa.Column('rubrics', postgresql.ARRAY(sa.String()), nullable=False),
     sa.Column('text', sa.Text(), nullable=False),
     sa.Column('created_date', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
     )
     # ### end Alembic commands ###
 

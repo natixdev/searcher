@@ -5,7 +5,6 @@ from app.db import get_db_session
 from app.schemas import DocumentResponse, SearchRequest, SearchResponse
 from app.services import search_documents
 
-
 router = APIRouter(prefix='/search', tags=['Search'])
 
 
