@@ -3,20 +3,6 @@ from elasticsearch import AsyncElasticsearch
 from app.settings import settings
 
 
-INDEX_MAPPING = {
-    'mappings': {
-        'properties': {
-            'id': {
-                'type': 'integer',
-            },
-            'text': {
-                'type': 'text',
-            },
-        },
-    },
-}
-
-
 elasticsearch_client = AsyncElasticsearch(
     hosts=[
         {
@@ -26,16 +12,3 @@ elasticsearch_client = AsyncElasticsearch(
         },
     ],
 )
-
-
-async def create_index() -> None:
-    """Создает индекс Elasticsearch, если он отсутствует."""
-    if await elasticsearch_client.indices.exists(
-        index=settings.elasticsearch_index,
-    ):
-        return
-
-    await elasticsearch_client.indices.create(
-        index=settings.elasticsearch_index,
-        body=INDEX_MAPPING,
-    )

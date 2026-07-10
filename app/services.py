@@ -68,10 +68,7 @@ async def delete_document(
     document_id: int,
 ) -> None:
     """Удаляет документ из PostgreSQL и Elasticsearch."""
-    result = await session.execute(
-        select(Document).where(Document.id == document_id)
-    )
-    document = result.scalar_one_or_none()
+    document = await session.get(Document, document_id)
 
     if document is None:
         raise DocumentNotFoundError
@@ -90,7 +87,6 @@ async def delete_document(
         )
     except Exception:
         logger.exception(
-            'Ошибка при удалении документа с id = %s',
+            'Не удалось удалить документ с id = %s из Elasticsearch.',
             document_id,
         )
-        raise

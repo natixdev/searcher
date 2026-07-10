@@ -26,7 +26,7 @@ POST /api/v1/search
 ### Удаление документа
 
 ```
-DELETE /api/v1/documents/{id}
+DELETE /api/v1/documents/{document_id}
 ```
 
 Удаляет документ из PostgreSQL и Elasticsearch
@@ -45,6 +45,7 @@ DELETE /api/v1/documents/{id}
 ├── docker-compose.yml
 ├── alembic.ini
 ├── requirements.txt
+├── docs.json
 └── README.md
 ```
 
@@ -118,6 +119,8 @@ OpenAPI:
 http://localhost:8000/openapi.json
 ```
 
+Файл `docs.json` в корне репозитория (по заданию, рядом с README.md)
+
 ---
 
 ## Пример поиска
@@ -138,16 +141,18 @@ Content-Type: application/json
 ### Ответ
 
 ```json
-[
-  {
-    "id": 1,
-    "rubrics": [
-      "python"
-    ],
-    "text": "FastAPI is a modern Python framework.",
-    "created_date": "2025-01-01T10:00:00"
-  }
-]
+{
+  "documents": [
+    {
+      "id": 1,
+      "rubrics": [
+        "python"
+      ],
+      "text": "FastAPI is a modern Python framework.",
+      "created_date": "2025-01-01T10:00:00"
+    }
+  ]
+}
 ```
 
 ---
@@ -168,11 +173,10 @@ DELETE /api/v1/documents/1
 
 ## Архитектура
 
-* PostgreSQL хранит полные данные документов.
-* Elasticsearch используется только для полнотекстового поиска.
-* После поиска из Elasticsearch извлекаются идентификаторы документов.
-* Полные данные загружаются из PostgreSQL.
-* Источником истины является PostgreSQL.
+* PostgreSQL хранит полные данные документов
+* Elasticsearch используется только для поиска
+* После поиска из Elasticsearch извлекаются идентификаторы документов
+* Полные данные загружаются из PostgreSQL
 
 ---
 
@@ -182,3 +186,5 @@ DELETE /api/v1/documents/1
 * Версионирование API (`/api/v1`)
 * Управление схемой базы данных через Alembic
 * Упрощенная архитектура для тестового
+* PostgreSQL - источник истины
+* При сбое удаления в Elasticsearch не возвращается ошибка 500, если был успешный коммит в PostgreSQL -- ошибка логируется
