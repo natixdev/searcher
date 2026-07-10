@@ -1,6 +1,6 @@
 from elasticsearch import AsyncElasticsearch
 
-from app.settings import settings
+from settings import settings
 
 
 INDEX_MAPPING = {
