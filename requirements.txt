@@ -1,7 +1,7 @@
-fastapi
-pydantic
-SQLAlchemy
-uvicorn
-elasticsearch
-python-dotenv
-alembic
+fastapi==0.139.0
+uvicorn==0.51.0
+SQLAlchemy==2.0.51
+asyncpg==0.31.0
+alembic==1.18.5
+elasticsearch[async]==8.17.2
+pydantic-settings==2.14.2
