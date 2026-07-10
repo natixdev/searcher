@@ -12,6 +12,10 @@ class Settings(BaseSettings):
     postgres_user: str
     postgres_password: str
 
+    elasticsearch_host: str
+    elasticsearch_port: int
+    elasticsearch_index: str = 'documents'
+
     model_config = SettingsConfigDict(
         env_file='.env',
         env_file_encoding='utf-8',
